@@ -3,7 +3,6 @@ import { FEATURED_PROJECTS_QUERY, SITE_SETTINGS_QUERY, ALL_TESTIMONIALS_QUERY } 
 import { HeroSection }         from '@/components/sections/HeroSection'
 import { FeaturedWork }        from '@/components/sections/FeaturedWork'
 import { AboutSection }        from '@/components/sections/AboutSection'
-import { StatsSection }        from '@/components/sections/StatsSection'
 import { TestimonialsSection } from '@/components/sections/TestimonialsSection'
 import { CTASection }          from '@/components/sections/CTASection'
 
@@ -27,13 +26,22 @@ interface SiteSettings {
   heroImage?:         { url?: string; alt?: string; width?: number; height?: number }
 }
 
+interface SanityTestimonial {
+  _id:      string
+  author:   string
+  role?:    { es: string; en: string }
+  quote:    { es: string; en: string }
+  category?: { es: string; en: string }
+  featured?: boolean
+}
+
 export const revalidate = 60
 
 export default async function HomePage() {
   const [projects, settings, testimonials] = await Promise.all([
     sanityFetch<SanityProject[]>({ query: FEATURED_PROJECTS_QUERY, tags: ['project'] }),
     sanityFetch<SiteSettings>({ query: SITE_SETTINGS_QUERY, tags: ['siteSettings'] }),
-    sanityFetch<any[]>({ query: ALL_TESTIMONIALS_QUERY, tags: ['testimonial'] }),
+    sanityFetch<SanityTestimonial[]>({ query: ALL_TESTIMONIALS_QUERY, tags: ['testimonial'] }),
   ])
 
   return (

@@ -19,7 +19,7 @@ const CONTENT = {
     ),
     en: (
       <>
-        Let's talk about
+        Let&apos;s talk about
         <br />
         your <em className="font-serif-italic text-beige">story</em>
       </>

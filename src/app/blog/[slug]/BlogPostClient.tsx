@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { PortableText } from '@portabletext/react'
 import { RevealBlock } from '@/components/ui/RevealBlock'
@@ -31,6 +32,26 @@ const LABELS = {
   share:   { es: 'Compartir',                  en: 'Share'               },
 }
 
+// ── Portable Text block types ─────────────────────────────────────────────────
+
+interface BlockChildren {
+  children?: React.ReactNode
+}
+
+// ── Sanity types ──────────────────────────────────────────────────────────────
+
+interface PortableTextBlock {
+  _key?: string
+  _type: string
+  [key: string]: unknown
+}
+
+interface SanityImage {
+  url?: string
+  blurUrl?: string
+  alt?: string
+}
+
 interface SanityPost {
   _id:          string
   title:        { es: string; en: string }
@@ -39,9 +60,9 @@ interface SanityPost {
   readTime?:    number
   category?:    string
   excerpt?:     { es: string; en: string }
-  content?:     { es: any[]; en: any[] }
-  coverImage?:  { url?: string; blurUrl?: string; alt?: string }
-  images?:      Array<{ url?: string; blurUrl?: string; alt?: string }>
+  content?:     { es: PortableTextBlock[]; en: PortableTextBlock[] }
+  coverImage?:  SanityImage
+  images?:      SanityImage[]
 }
 
 interface RelatedPost {
@@ -49,7 +70,7 @@ interface RelatedPost {
   title:       { es: string; en: string }
   slug:        string
   category?:   string
-  coverImage?: { url?: string; blurUrl?: string; alt?: string }
+  coverImage?: SanityImage
 }
 
 interface Props {
@@ -68,21 +89,21 @@ function formatDate(dateStr: string, lang: 'es' | 'en'): string {
 
 const portableComponents = {
   block: {
-    normal: ({ children }: any) => (
+    normal: ({ children }: BlockChildren) => (
       <p className="mb-6 font-sans text-[15px] leading-[1.95] text-cream/70">{children}</p>
     ),
-    h2: ({ children }: any) => (
+    h2: ({ children }: BlockChildren) => (
       <h2 className="mb-5 mt-12 font-serif text-2xl font-light text-cream">{children}</h2>
     ),
-    h3: ({ children }: any) => (
+    h3: ({ children }: BlockChildren) => (
       <h3 className="mb-4 mt-10 font-serif text-xl font-light text-cream">{children}</h3>
     ),
   },
   marks: {
-    strong: ({ children }: any) => (
+    strong: ({ children }: BlockChildren) => (
       <strong className="font-medium text-cream">{children}</strong>
     ),
-    em: ({ children }: any) => (
+    em: ({ children }: BlockChildren) => (
       <em className="font-serif-italic text-beige">{children}</em>
     ),
   },
@@ -93,7 +114,7 @@ export default function BlogPostClient({ post, related }: Props) {
 
   const catLabel = CAT_LABELS[post.category ?? ''] ?? { es: post.category ?? '', en: post.category ?? '' }
   const dateStr  = post.publishedAt ? formatDate(post.publishedAt, lang) : ''
-  console.log('images:', JSON.stringify(post.images, null, 2))
+
   return (
     <main className="min-h-screen pb-40">
 
@@ -149,15 +170,15 @@ export default function BlogPostClient({ post, related }: Props) {
           {/* Contenido con imágenes intercaladas */}
           {post.content?.[lang]?.length ? (
             <RevealBlock>
-              {post.content[lang].map((block: any, i: number) => {
+              {post.content[lang].map((block: PortableTextBlock, i: number) => {
                 const imageIndex = Math.floor(i / 3)
                 const shouldShowImage =
                   i > 0 &&
-                  (i + 1) % 3 === 0 && 
+                  (i + 1) % 3 === 0 &&
                   post.images?.[imageIndex]?.url
 
                 return (
-                  <div key={block._key ?? i}>
+                  <div key={(block._key as string) ?? i}>
                     {shouldShowImage && (
                       <div className="relative my-10 aspect-[16/9] w-full overflow-hidden rounded-sm2">
                         <Image
@@ -211,7 +232,7 @@ export default function BlogPostClient({ post, related }: Props) {
                 const rpCat = CAT_LABELS[rp.category ?? ''] ?? { es: '', en: '' }
                 return (
                   <RevealBlock key={rp._id} delay={(i % 2) as 0 | 1}>
-                    <a href={`/blog/${rp.slug}`} className="group card-dark flex overflow-hidden rounded-sm2">
+                    <Link href={`/blog/${rp.slug}`} className="group card-dark flex overflow-hidden rounded-sm2">
                       <div className={cn(
                         'relative w-28 flex-shrink-0 overflow-hidden',
                         !rp.coverImage?.url && `bg-gradient-to-br ${GRADIENTS[i % GRADIENTS.length]}`
@@ -231,7 +252,7 @@ export default function BlogPostClient({ post, related }: Props) {
                           {rp.title[lang]}
                         </p>
                       </div>
-                    </a>
+                    </Link>
                   </RevealBlock>
                 )
               })}
@@ -242,7 +263,7 @@ export default function BlogPostClient({ post, related }: Props) {
 
       {/* ── Back link ── */}
       <div className="section-container">
-        <a href="/blog" className="btn-ghost">{t(LABELS.back)}</a>
+        <Link href="/blog" className="btn-ghost">{t(LABELS.back)}</Link>
       </div>
 
     </main>
