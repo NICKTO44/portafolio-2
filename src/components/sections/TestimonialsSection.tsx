@@ -249,7 +249,7 @@ function TestimonialCard({
 
       {/* Quote */}
       <p className="mb-5 font-serif text-sm font-light italic leading-relaxed text-cream/80">
-        "{testimonial.quote[lang]}"
+        &quot;{testimonial.quote[lang]}&quot;
       </p>
 
       {/* Author */}

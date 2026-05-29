@@ -252,9 +252,9 @@ const siteSettingsSchema = defineType({
           ],
           preview: {
             select: { title: 'year', subtitle: 'title.es' },
-            prepare: (value: Record<string, any>) => ({
-              title:    value.title    as string,
-              subtitle: value.subtitle as string,
+            prepare: ({ title, subtitle }: { title?: string; subtitle?: string }) => ({
+              title,
+              subtitle,
             }),
           },
         },

@@ -2,11 +2,14 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { RevealBlock } from '@/components/ui/RevealBlock'
 import { SectionHeader } from '@/components/shared/SectionHeader'
 import { useLang } from '@/hooks/useLang'
 import { cn } from '@/lib/utils'
+
+const MotionLink = motion(Link)
 
 const CONTENT = {
   eyebrow: { es: 'Trabajo Seleccionado', en: 'Selected Work' },
@@ -70,9 +73,9 @@ export function FeaturedWork({ projects = [] }: Props) {
           eyebrow={t(CONTENT.eyebrow)}
           title={<>Featured <em className="font-serif-italic text-beige">Work</em></>}
           action={
-            <a href="/portfolio" className="btn-ghost">
+            <Link href="/portfolio" className="btn-ghost">
               {t(CONTENT.viewAll)} →
-            </a>
+            </Link>
           }
         />
       </RevealBlock>
@@ -99,7 +102,7 @@ export function FeaturedWork({ projects = [] }: Props) {
               const gradient = GRADIENTS[i % GRADIENTS.length]
 
               return (
-                <motion.a
+                <MotionLink
                   key={project._id}
                   href={`/portfolio/${project.slug}`}
                   layout
@@ -142,7 +145,7 @@ export function FeaturedWork({ projects = [] }: Props) {
                       <path d="M7 17L17 7M7 7h10v10" />
                     </svg>
                   </div>
-                </motion.a>
+                </MotionLink>
               )
             })}
           </AnimatePresence>
