@@ -4,7 +4,6 @@
 // src/app/services/loading.tsx
 // src/app/about/loading.tsx
 // src/app/blog/loading.tsx
-
 export default function Loading() {
     return (
       <div className="flex min-h-screen items-center justify-center">

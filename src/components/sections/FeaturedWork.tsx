@@ -16,15 +16,7 @@ const CONTENT = {
   viewAll: { es: 'Ver todo el portafolio', en: 'View full portfolio' },
 }
 
-const FILTERS = [
-  { id: 'all',          es: 'Todo',             en: 'All'                },
-  { id: 'fashion',      es: 'Moda & Editorial', en: 'Fashion & Editorial' },
-  { id: 'wedding',      es: 'Bodas Luxury',     en: 'Luxury Weddings'    },
-  { id: 'architecture', es: 'Arquitectura',     en: 'Architecture'       },
-  { id: 'portrait',     es: 'Retratos',         en: 'Portraits'          },
-  { id: 'lifestyle',    es: 'Lifestyle',        en: 'Lifestyle'          },
-  { id: 'branding',     es: 'Branding',         en: 'Branding'           },
-]
+
 
 const GRADIENTS = [
   'from-[#1a1510] via-[#231a0f] to-[#1a1208]',
@@ -71,7 +63,7 @@ export function FeaturedWork({ projects = [] }: Props) {
       <RevealBlock>
         <SectionHeader
           eyebrow={t(CONTENT.eyebrow)}
-          title={<>Featured <em className="font-serif-italic text-beige">Work</em></>}
+          title={<><em className="font-serif-italic text-beige"></em></>}
           action={
             <Link href="/portfolio" className="btn-ghost">
               {t(CONTENT.viewAll)} →
@@ -80,18 +72,7 @@ export function FeaturedWork({ projects = [] }: Props) {
         />
       </RevealBlock>
 
-      {/* Filters */}
-      <RevealBlock delay={1} className="mb-12 flex flex-wrap gap-2">
-        {FILTERS.map((f) => (
-          <button
-            key={f.id}
-            onClick={() => setActiveFilter(f.id)}
-            className={cn('tag-pill', activeFilter === f.id && 'active')}
-          >
-            {f[lang]}
-          </button>
-        ))}
-      </RevealBlock>
+   
 
       {/* Grid con altura uniforme */}
       <RevealBlock delay={2}>

@@ -167,7 +167,7 @@ export default function AboutPage({ photographerPhoto, behindImages, bio, journe
                 {CONTENT.philosophyTitle[lang]}
               </h2>
               <p className="body-copy mb-8 text-base leading-[1.9]">{bioText}</p>
-              <p className="font-serif text-3xl italic text-beige">Lumière</p>
+              <p className="font-serif text-3xl italic text-beige">Eikhonphoto</p>
             </RevealBlock>
           </div>
         </div>

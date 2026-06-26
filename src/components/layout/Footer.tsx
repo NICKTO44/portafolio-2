@@ -18,12 +18,12 @@ export function Footer() {
 
         {/* Brand */}
         <p className="font-serif text-xl tracking-[0.15em] text-cream">
-          LUMIÈRE
+          Eikhonphoto
         </p>
 
         {/* Copy */}
         <p className="font-sans text-[10px] tracking-[0.1em] text-muted">
-          © {year} Lumière Photography.{' '}
+          © {year} Eikhonphoto.{' '}
           {lang === 'es' ? 'Todos los derechos reservados.' : 'All rights reserved.'}
         </p>
 

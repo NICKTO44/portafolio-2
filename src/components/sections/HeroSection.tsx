@@ -6,14 +6,7 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import { useLang } from '@/hooks/useLang'
 
 const CONTENT = {
-  eyebrow: {
-    es: 'Fotografía de Autor · Colecciones 2024',
-    en: 'Editorial Photography · Collections 2024',
-  },
-  tagline: {
-    es: 'Where light becomes art',
-    en: 'Where light becomes art',
-  },
+ 
   cta1: { es: 'Ver Portafolio',  en: 'View Portfolio' },
   cta2: { es: 'Reservar Sesión', en: 'Book a Session' },
   scroll: { es: 'Scroll', en: 'Scroll' },
@@ -58,7 +51,7 @@ export function HeroSection({ heroImage, brandName, tagline }: Props) {
   useEffect(() => { setMounted(true) }, [])
 
   const { first, rest } = splitBrandName(brandName)
-  const taglineText = tagline?.[lang] || tagline?.es || t(CONTENT.tagline)
+  const taglineText = tagline?.[lang] || tagline?.es 
 
   return (
     <section
@@ -104,7 +97,7 @@ export function HeroSection({ heroImage, brandName, tagline }: Props) {
           transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           className="eyebrow mb-8 text-gold"
         >
-          {t(CONTENT.eyebrow)}
+          
         </motion.p>
 
         <motion.h1
